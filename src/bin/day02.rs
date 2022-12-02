@@ -2,8 +2,8 @@
 
 use anyhow::{anyhow, Result};
 use std::fs::read_to_string;
-use Outcome::{Draw, Loose, Win};
-use Rps::{Paper, Rock, Sciscors};
+use Outcome::{Draw, Lose, Win};
+use Rps::{Paper, Rock, Scissors};
 
 trait FromXyz
 where
@@ -16,16 +16,16 @@ where
 enum Outcome {
     Win,
     Draw,
-    Loose,
+    Lose,
 }
 
 impl Outcome {
     #[cfg(test)]
     fn inverse(self) -> Self {
         match self {
-            Win => Loose,
+            Win => Lose,
             Draw => Draw,
-            Loose => Win,
+            Lose => Win,
         }
     }
 
@@ -33,7 +33,7 @@ impl Outcome {
         match self {
             Win => 6,
             Draw => 3,
-            Loose => 0,
+            Lose => 0,
         }
     }
 }
@@ -41,7 +41,7 @@ impl Outcome {
 impl FromXyz for Outcome {
     fn from_xyz(input: &str) -> Result<Self> {
         match input {
-            "X" => Ok(Loose),
+            "X" => Ok(Lose),
             "Y" => Ok(Draw),
             "Z" => Ok(Win),
             other => Err(anyhow!("Unexpected {other} where XYZ was expected")),
@@ -53,17 +53,17 @@ impl FromXyz for Outcome {
 enum Rps {
     Rock,
     Paper,
-    Sciscors,
+    Scissors,
 }
 
 impl Rps {
-    const ALL: [Self; 3] = [Rock, Paper, Sciscors];
+    const ALL: [Self; 3] = [Rock, Paper, Scissors];
 
     fn play(self, other: Self) -> Outcome {
         match (self, other) {
-            (Rock, Sciscors) | (Sciscors, Paper) | (Paper, Rock) => Win,
+            (Rock, Scissors) | (Scissors, Paper) | (Paper, Rock) => Win,
             (a, b) if a == b => Draw,
-            _ => Loose,
+            _ => Lose,
         }
     }
 
@@ -75,7 +75,7 @@ impl Rps {
         match self {
             Rock => 1,
             Paper => 2,
-            Sciscors => 3,
+            Scissors => 3,
         }
     }
 
@@ -94,7 +94,7 @@ impl Rps {
         match input {
             "A" => Ok(Rock),
             "B" => Ok(Paper),
-            "C" => Ok(Sciscors),
+            "C" => Ok(Scissors),
             other => Err(anyhow!("Unexpected {other} where ABC was expected")),
         }
     }
@@ -105,7 +105,7 @@ impl FromXyz for Rps {
         match input {
             "X" => Ok(Rock),
             "Y" => Ok(Paper),
-            "Z" => Ok(Sciscors),
+            "Z" => Ok(Scissors),
             other => Err(anyhow!("Unexpected {other} where XYZ was expected")),
         }
     }
