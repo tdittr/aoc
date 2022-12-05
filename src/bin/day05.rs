@@ -35,7 +35,7 @@ fn parse_stack_line(line: &str) -> impl Iterator<Item = Option<&str>> {
             r"(?x)
                 \s? # Leading space (missing for first group)
                 (?:
-                    (?:\[(?P<box>.)\]) # Box
+                    (?:\[(?P<box>.+?)\]) # Box
                     |
                     (?:\s\s\s) # Air
                 )",
@@ -172,6 +172,15 @@ move 1 from 1 to 2
         assert_eq!(
             parse_stack_line(test).collect::<Vec<_>>(),
             vec![Some("A"), Some("B"), None, Some("C")]
+        );
+    }
+
+    #[test]
+    fn regex_emoji() {
+        let test = "[🏳️‍🌈] [👨‍👩‍👦‍👦]     [C]";
+        assert_eq!(
+            parse_stack_line(test).collect::<Vec<_>>(),
+            vec![Some("🏳️‍🌈"), Some("👨‍👩‍👦‍👦"), None, Some("C")]
         );
     }
 
