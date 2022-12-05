@@ -4,7 +4,7 @@ use std::ops::RangeInclusive;
 type Group = (RangeInclusive<u32>, RangeInclusive<u32>);
 
 fn parse_range(input: &str) -> RangeInclusive<u32> {
-    let (from, to) = input.split_once("-").unwrap();
+    let (from, to) = input.split_once('-').unwrap();
     from.parse().unwrap()..=to.parse().unwrap()
 }
 
