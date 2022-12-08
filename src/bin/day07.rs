@@ -1,9 +1,9 @@
-extern crate core;
+#![warn(clippy::pedantic)]
 
 use anyhow::{anyhow, Context, Result};
 use compact_str::CompactString;
 use hashbrown::HashMap;
-use std::fmt::{Debug, Display};
+use std::fmt::Debug;
 use std::fs::read_to_string;
 use std::str::FromStr;
 
@@ -129,7 +129,7 @@ fn part2(g: &Input) -> Result<usize> {
     let sizes = dir_sizes(g)?;
 
     let free_space = 70_000_000 - sizes[&vec![]];
-    let min_size = 30000000 - free_space;
+    let min_size = 30_000_000 - free_space;
 
     sizes
         .iter()

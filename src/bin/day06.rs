@@ -1,7 +1,6 @@
 #![warn(clippy::pedantic)]
 
 use anyhow::{Context, Result};
-use itertools::Itertools;
 use std::fs::read_to_string;
 
 type Input = Vec<u8>;
