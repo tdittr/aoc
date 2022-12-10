@@ -117,9 +117,9 @@ fn part2(input: &Input) -> Result<String> {
     for _y in 0..6 {
         for x in 0..40 {
             if x >= m.reg_x - 1 && x <= m.reg_x + 1 {
-                r.push('#');
+                r.push('█');
             } else {
-                r.push('.');
+                r.push(' ');
             }
 
             m.step()?;
