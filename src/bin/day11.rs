@@ -1,6 +1,7 @@
 #![warn(clippy::pedantic)]
 
 use anyhow::{anyhow, Context, Result};
+use serde::{Deserialize, Serialize};
 use std::cell::RefCell;
 use std::cmp::Reverse;
 use std::fs::read_to_string;
@@ -11,7 +12,7 @@ type Input = Vec<RefCell<Monkey>>;
 
 type Item = u64;
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Serialize, Deserialize)]
 enum Operation {
     Mul(Item),
     Add(Item),
@@ -41,7 +42,7 @@ impl FromStr for Operation {
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 struct Monkey {
     items: Vec<Item>,
     op: Operation,
@@ -197,6 +198,8 @@ fn main() -> Result<()> {
     let input = read_to_string("input/day11.txt").unwrap();
     let input = parse_input(&input)?;
 
+    println!("{}", serde_json::to_string_pretty(&input)?);
+
     let part1 = part1(&input);
     println!("Part 1: {part1}");
 
@@ -283,7 +286,7 @@ mod tests {
         assert_eq!(inspections, vec![101, 95, 7, 105]);
     }
 
-    const EXAMPLE: &str = r"Monkey 0:
+    pub const EXAMPLE: &str = r"Monkey 0:
   Starting items: 79, 98
   Operation: new = old * 19
   Test: divisible by 23
