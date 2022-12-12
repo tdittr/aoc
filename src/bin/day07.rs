@@ -184,7 +184,7 @@ $ ls
 ";
 
         let input = parse_input(input).unwrap();
-        assert_eq!(part1(&input).unwrap(), 95437);
-        assert_eq!(part2(&input).unwrap(), 24933642);
+        assert_eq!(part1(&input).unwrap(), 95_437);
+        assert_eq!(part2(&input).unwrap(), 24_933_642);
     }
 }
